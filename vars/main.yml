@@ -1,0 +1,5 @@
+---
+geth_name: geth-{{geth_platform}}-{{geth_version}}
+geth_archive: '{{geth_name}}-{{geth_build}}.tar.gz'
+geth_url: '{{geth_mirror}}/{{geth_archive}}'
+geth_checksum: '{{geth_checksums[geth_version][geth_platform]}}'

@@ -1,0 +1,26 @@
+---
+geth_version: 1.8.17
+geth_build: 8bbe7207
+geth_platform: linux-amd64
+geth_mirror: https://gethstore.blob.core.windows.net/builds/
+
+geth_checksums:
+  '1.8.13':
+    linux-amd64: md5:46005ff31019b35ab7557cb898bc6d97
+  '1.8.17':
+    linux-amd64: md5:8f0d6b42426e7a5333c13b35846cb941
+
+geth_dir: /opt/geth
+geth_user: geth
+geth_group: geth
+
+geth_id: ''
+geth_network: rinkeby
+geth_datadir: '{{geth_dir}}/.ethereum'
+geth_pw_file: '{{geth_datadir}}/keystore/password'
+geth_rpc_port: 8545
+geth_rpc_address: 127.0.0.1
+geth_exec_base: '{{geth_dir}}/geth --config={{geth_dir}}/config.toml --datadir={{geth_datadir}} --rinkeby'
+
+geth_address: '0x0'
+geth_password: 'REPLACE_THIS_INSECURE_PASSWORD'

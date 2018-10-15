@@ -1,0 +1,9 @@
+---
+- name: Manage geth config file
+  template:
+    src: config.toml.j2
+    dest: '{{geth_dir}}/config.toml'
+    owner: '{{geth_user}}'
+    group: '{{geth_group}}'
+    mode: 0400
+  tags: config

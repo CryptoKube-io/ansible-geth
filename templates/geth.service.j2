@@ -1,0 +1,16 @@
+[Unit]
+Description=Go Ethereum client
+Documentation=https://github.com/ethereum/go-ethereum/wiki
+After=network.target
+
+[Service]
+Type=simple
+User={{geth_user}}
+Group={{geth_group}}
+ExecStart={{geth_exec_base}}
+Restart=on-failure
+# SIGHUP gives geth time to exit cleanly before SIGKILL (default 90s)
+KillSignal=SIGHUP
+
+[Install]
+WantedBy=default.target

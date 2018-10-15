@@ -1,0 +1,37 @@
+---
+- name: Geth Account Setup
+  block:
+  ## BLOCK BEGIN: become_user
+    - name: Create geth datadir
+      file:
+        path: "{{ geth_datadir }}"
+        state: directory
+        owner: "{{ geth_user }}"
+        group: "{{ geth_group }}"
+        mode: 0700
+    
+    - name: Look for existing password file
+      stat:
+        path: "{{ geth_pw_file }}"
+      register: geth_pw_file_stat
+    
+    - name: Generate password file if none exists
+      copy:
+        content: "{{ lookup('password'), '/tmp/geth-pw_{{ ansible_hostname }} length=20' }}"
+        dest: "{{ geth_pw_file }}"
+        owner: "{{ geth_user }}"
+        group: "{{ geth_group }}"
+        mode: 0400
+      when: geth_pw_file_stat.stat.exists == False
+    
+    - name: Look for existing account file
+      stat:
+        path: "{{ geth_datadir }}/keystore/UTC--*"
+      register: geth_account_file_stat
+    
+    - name: Generate account if none exists
+      command: "{{ geth_dir }}/geth --datadir \"{{ geth_datadir }}\" --rinkeby --password \"{{ geth_pw_file }}\" account new"
+      when: geth_account_file_stat.stat.exists == False
+  ## BLOCK END: become_user
+  become_user: "{{ geth_user }}"
+  become: True

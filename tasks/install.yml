@@ -1,0 +1,37 @@
+---
+- name: Install geth
+  block:
+  ## BLOCK BEGIN: user+group+become_user
+    - name: Download geth package 
+      get_url:
+        url: '{{geth_url}}'
+        checksum: '{{geth_checksum}}'
+        dest: /tmp/{{geth_archive}}
+        mode: 0400
+
+    - name: Extract geth package
+      unarchive:
+        src: /tmp/{{geth_archive}}
+        dest: '{{geth_dir}}'
+        copy: False
+
+    - name: Remove geth package
+      file:
+        path: /tmp/{{geth_archive}}
+        state: absent
+
+    - name: Copy geth scripts
+      template:
+        src: '{{item}}.j2'
+        dest: '{{geth_dir}}/{{item}}'
+        mode: 0500
+      with_items:
+        - geth-init.sh
+        - geth-console.sh
+    
+  ## BLOCK END: user+group+become_user
+  vars:
+    owner: '{{geth_user}}'
+    group: '{{geth_group}}'
+  become_user: '{{geth_user}}'
+  become: True

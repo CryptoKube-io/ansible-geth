@@ -1,0 +1,23 @@
+---
+- name: Create group {{geth_group}}
+  group:
+    name: '{{geth_group}}'
+  tags: user
+
+- name: Create user {{geth_user}}
+  user:
+    name: '{{geth_user}}'
+    group: '{{geth_group}}'
+    home: '{{geth_dir}}'
+    create_home: no
+  tags: user
+
+- name: Create directory {{geth_dir}}
+  file:
+    path: '{{geth_dir}}'
+    state: directory
+    owner: '{{geth_user}}'
+    group: '{{geth_group}}'
+    mode: 0700
+  tags: user
+
